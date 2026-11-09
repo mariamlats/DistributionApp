@@ -1,65 +1,68 @@
-📦 DistributionApp
+# DistributionApp
 
-DistributionApp is a Windows-based desktop application developed in C# using the .NET Framework and DevExpress UI components. It is structured with a layered architecture, separating domain logic and data access for maintainability and scalability.
+**C# / .NET Framework 4.7.2 desktop application with DevExpress and SQL Server.**
 
----
+This repository preserves a compiled Windows build of **LatzaDB**, a distribution-management desktop application. Its assemblies separate the domain layer, repository/data-access layer and desktop interface, with Entity Framework and DevExpress components included alongside the executable.
 
-🧩 Features
+## Repository status
 
-- Responsive UI using DevExpress (v19.2)
-- Clean architecture with separation of concerns:
-  - Domain Layer (`LatzaDB.Domain.dll`)
-  - Repository Layer (`LatzaDB.Repository.dll`)
-- Data visualization via layout, pivot grids, and tree lists
-- Configurable through `LatzaDB.exe.config`
+**This is currently a compiled-build archive.** The repository does not contain C# source files, a Visual Studio solution/project, a package manifest or a database schema/migrations. It cannot be rebuilt from the files here alone.
 
----
+## Included components
 
- ⚙️ Tech Stack
+| Files | Role |
+| --- | --- |
+| LatzaDB.exe | Windows desktop entry point |
+| LatzaDB.Domain.dll | Domain assembly |
+| LatzaDB.Repository.dll | Repository/data-access assembly |
+| EntityFramework*.dll | Entity Framework 6 / SQL Server provider |
+| DevExpress.*.v19.2.dll | DevExpress desktop UI, grid, reporting and related components |
+| LatzaDB.exe.config | Runtime, UI and database configuration |
+| *.config.example | Configuration examples for a server with certificate-verified SQL encryption |
 
-- Language: C#
-- Framework: .NET Framework
-- UI Toolkit: DevExpress v19.2 (XtraLayout, XtraTreeList, XtraPivotGrid, etc.)
+The original debug-symbol files are excluded from the cleaned archive. Bundled third-party components retain their respective licences; their presence does not establish that every component is used by the application.
 
----
+## Run the archived build
 
- 🚀 Getting Started
+Use a Windows machine with:
 
-Prerequisites
+- .NET Framework **4.7.2 or a compatible later 4.x runtime**.
+- Access to a SQL Server database with the application's existing LatzaDB schema. That schema is not included here.
+- The required application and dependency assemblies kept together.
 
-- Windows OS
-- [.NET Framework 4.x](https://dotnet.microsoft.com/en-us/download/dotnet-framework)
-- Visual Studio
+Clone or download the repository:
 
- Installation
+~~~bash
+git clone https://github.com/mariamlats/DistributionApp.git
+~~~
 
-1. Clone this repository:
-    ```bash
-    git clone https://github.com/bgkcsav4/DistributionApp.git
-    ```
-2. Open the project in **Visual Studio**
-3. Restore NuGet packages (if needed)
-4. Build the solution
-5. Run the application
+Review the configuration and use a separate test database before launching the archived executable. The checked-in local configuration targets a local SQL Express instance and uses **Windows Integrated Security**, so database access follows the signed-in Windows account.
 
- Configuration
+The executable normally reads **LatzaDB.exe.config**. The library-side configuration is retained for reference; .NET does not automatically merge it into the executable's configuration.
 
-Edit `LatzaDB.exe.config` to adjust settings such as database connection strings, layout preferences, or other runtime configurations.
+## Database configuration
 
----
+The connection is named **LatzaDbContext**. The example files use placeholders for the server/database and specify:
 
- 🗃 File Overview
+~~~text
+Integrated Security=True;Encrypt=True;TrustServerCertificate=False;Connect Timeout=15
+~~~
 
-```
-DistributionApp/
-├── LatzaDB.Domain.dll          # Domain/business logic
-├── LatzaDB.Repository.dll      # Data access layer
-├── DevExpress.*.xml            # UI components documentation
-├── LatzaDB.exe.config          # Application settings
-├── *.pdb                       # Debugging symbols
-```
+Replace the placeholders with your environment's server and database. Certificate verification requires the SQL Server certificate to match the hostname and chain to a trusted certificate authority. The Windows account must have only the database permissions it needs.
 
----
-👤 Author
+Do not commit personalised connection settings, passwords, database backups or production data.
 
-Developed by [@bgkcsav4](https://github.com/bgkcsav4)
+## What is needed to restore a source project
+
+To make this a buildable portfolio project, add the original:
+
+1. Visual Studio solution and C# projects for the application, domain and repository layers.
+2. Database schema or migrations, with synthetic sample data.
+3. Package/dependency declarations and the appropriate DevExpress development setup.
+4. Build instructions and source-level regression tests.
+
+Once those are available, the application logic and dependency versions can be reviewed and updated. The compiled application and its bundled libraries have not been runtime-tested or decompiled as part of this documentation cleanup. The XML configuration examples were parsed and checked locally.
+
+## Attribution
+
+Original project attribution from the previous README: [@bgkcsav4](https://github.com/bgkcsav4).
