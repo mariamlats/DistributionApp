@@ -1,0 +1,13 @@
+.vs/
+**/bin/
+**/obj/
+*.pdb
+*.user
+*.suo
+*.local.config
+.env
+*.mdf
+*.ldf
+*.bak
+*.bacpac
+.DS_Store

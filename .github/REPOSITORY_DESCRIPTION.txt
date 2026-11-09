@@ -1,0 +1,1 @@
+Archived C# distribution-management desktop app using .NET Framework 4.7.2, DevExpress 19.2, Entity Framework and SQL Server. Compiled Windows build.
